@@ -30,7 +30,7 @@ response: {
 
 If `puzzleId` doesn’t match `currentPuzzleId`, throw error with some message
 
-PATCH `/scores/:scoreId`
+PATCH `/scores/:scoreId` updates score with more words
 
 ```
 params:
@@ -48,7 +48,7 @@ response:
 }
 ```
 
-POST `/scores/:scoreId/complete`
+POST `/scores/:scoreId/complete` submits score
 
 ```
 params: {}
