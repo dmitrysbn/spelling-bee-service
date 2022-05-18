@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Puzzle {
+  id        String   @id @default(uuid())
+  words     String
+  createdAt DateTime @default(now())
+  scores    Score[]
+}
+
+model Score {
+  id        String   @id @default(uuid())
+  score     Int
+  words     String
+  complete  Boolean  @default(false)
+  userId    String
+  puzzleId  String
+  createdAt DateTime @default(now())
+  puzzle    Puzzle   @relation(fields: [puzzleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, puzzleId])
+}
