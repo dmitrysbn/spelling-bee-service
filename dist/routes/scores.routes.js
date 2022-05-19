@@ -12,21 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const koa_1 = __importDefault(require("koa"));
-const routes_1 = __importDefault(require("./routes"));
-const koa_logger_1 = __importDefault(require("koa-logger"));
-const koa_json_1 = __importDefault(require("koa-json"));
-const koa_bodyparser_1 = __importDefault(require("koa-bodyparser"));
-const error_middleware_1 = require("./middleware/error.middleware");
-const app = new koa_1.default();
-const PORT = process.env.PORT || 1337;
-// Middlewares
-app.use((0, koa_json_1.default)());
-app.use((0, koa_logger_1.default)());
-app.use((0, koa_bodyparser_1.default)());
-// Routes
-app.use((ctx, next) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, error_middleware_1.error)(ctx, next); }));
-app.use((0, routes_1.default)());
-app.listen(PORT, () => {
-    console.log('Koa started');
-});
+exports.scoreRouter = void 0;
+const koa_router_1 = __importDefault(require("koa-router"));
+exports.scoreRouter = new koa_router_1.default({ prefix: '/scores' });
+exports.scoreRouter.post('/', (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+    const { body } = ctx.request;
+    const score = yield createScore(body);
+    ctx.body = score;
+}));
+exports.scoreRouter.get('/', (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+    const { query } = ctx;
+    const { gameId, userId } = query;
+    if (userId) {
+        const scoresByUser = yield findScoresByUser(userId);
+        return (ctx.body = scoresByUser);
+    }
+    if (gameId) {
+        const scoresByGame = yield findScoresByGame(gameId);
+        return (ctx.body = scoresByGame);
+    }
+    const scores = yield findManyScores();
+    return (ctx.body = scores);
+}));
