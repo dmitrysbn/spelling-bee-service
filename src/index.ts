@@ -8,9 +8,13 @@ import { error } from './middleware/error.middleware';
 const app = new Koa();
 const PORT = process.env.PORT || 1337;
 
+const logger2 = logger((str, args) => {
+  console.log(str, args);
+});
+
 // Middlewares
 app.use(json());
-app.use(logger());
+app.use(logger2);
 app.use(bodyParser());
 
 // Routes

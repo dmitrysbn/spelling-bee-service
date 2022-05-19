@@ -12,8 +12,8 @@ puzzleRouter.get('/current_puzzle', (ctx: Context) => {
 
 puzzleRouter.post('/', async (ctx: Context) => {
   const { body } = ctx.request;
-  const game = await createPuzzle(body);
-  ctx.body = game;
+  const puzzle = await createPuzzle(body);
+  ctx.body = puzzle;
 });
 
 export default puzzleRouter;
