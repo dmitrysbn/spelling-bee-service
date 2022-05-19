@@ -24,19 +24,19 @@ scoreRouter.post('/', async (ctx: Context) => {
   ctx.body = score;
 });
 
-scoreRouter.post('/:id/submit', async (ctx: Context) => {
-  const { id } = ctx.params;
-
-  const score = await submitScore(id);
-  ctx.body = score;
-});
-
 scoreRouter.patch('/:id', async (ctx: Context) => {
   const { id } = ctx.params;
   const { body } = ctx.request;
 
   const updatedScore = await updateScore(id, body);
   ctx.body = updatedScore;
+});
+
+scoreRouter.post('/:id/submit', async (ctx: Context) => {
+  const { id } = ctx.params;
+
+  const score = await submitScore(id);
+  ctx.body = score;
 });
 
 export default scoreRouter;

@@ -25,9 +25,8 @@ export async function updateScore(
   id: string,
   payload: Partial<Score>
 ): Promise<Score> {
-  console.log(id, payload);
-
   const score = await prisma.score.update({ where: { id }, data: payload });
+
   return score;
 }
 
@@ -36,5 +35,6 @@ export async function submitScore(id: string): Promise<Score> {
     where: { id },
     data: { complete: true },
   });
+
   return score;
 }
