@@ -1,5 +1,5 @@
-export function getCurrentPuzzleId(): string {
-  const currentPuzzleId = '12345-May19';
+import format from 'date-fns/format';
 
-  return currentPuzzleId;
+export function getCurrentPuzzleId(): string {
+  return format(new Date(), 'dd-MM-yyyy');
 }
