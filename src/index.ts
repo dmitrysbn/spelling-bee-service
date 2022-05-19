@@ -8,10 +8,6 @@ import { error } from './middleware/error.middleware';
 const app = new Koa();
 const PORT = process.env.PORT || 1337;
 
-interface HelloRequest {
-  name: string;
-}
-
 // Middlewares
 app.use(json());
 app.use(logger());
