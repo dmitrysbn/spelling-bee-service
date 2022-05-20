@@ -18,6 +18,7 @@ scoreRouter.get('/', async (ctx: Context) => {
     userId as string,
     puzzleId as string
   );
+
   ctx.body = score;
 });
 
@@ -25,6 +26,7 @@ scoreRouter.post('/', async (ctx: Context) => {
   const { body } = ctx.request;
 
   const score = await createScore(body);
+
   ctx.body = score;
 });
 
@@ -33,6 +35,7 @@ scoreRouter.patch('/:id', async (ctx: Context) => {
   const { body } = ctx.request;
 
   const updatedScore = await updateScore(id, body);
+
   ctx.body = updatedScore;
 });
 
@@ -40,6 +43,7 @@ scoreRouter.post('/:id/submit', async (ctx: Context) => {
   const { id } = ctx.params;
 
   const score = await submitScore(id);
+
   ctx.body = score;
 });
 

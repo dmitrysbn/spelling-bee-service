@@ -13,6 +13,7 @@ puzzleRouter.get('/current_puzzle', (ctx: Context) => {
 puzzleRouter.post('/', async (ctx: Context) => {
   const { body } = ctx.request;
   const puzzle = await createPuzzle(body);
+
   ctx.body = puzzle;
 });
 
