@@ -34,15 +34,15 @@ export async function updateScore(
 
   if (
     existingScore &&
-    legalWords.includes(word) &&
+    legalWords.includes(word.toLowerCase()) &&
     !existingScore.words.includes(word)
   ) {
-    const newValue = existingScore.value + word.length;
+    const newValue = existingScore.points + word.length;
     const newWords = JSON.stringify([...JSON.parse(existingScore.words), word]);
 
     const updatedScore = await prisma.score.update({
       where: { id },
-      data: { value: newValue, words: newWords },
+      data: { points: newValue, words: newWords },
     });
 
     return updatedScore;
