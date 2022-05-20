@@ -11,9 +11,13 @@ import {
 const scoreRouter = new Router({ prefix: '/scores' });
 
 scoreRouter.get('/', async (ctx: Context) => {
-  const { body } = ctx.request;
+  const { query } = ctx.request;
+  const { userId, puzzleId } = query;
 
-  const score = await findScoreByUserAndPuzzle(body.userId, body.puzzleId);
+  const score = await findScoreByUserAndPuzzle(
+    userId as string,
+    puzzleId as string
+  );
   ctx.body = score;
 });
 

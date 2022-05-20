@@ -1,4 +1,5 @@
 import { PrismaClient, Score } from '@prisma/client';
+import { legalWords } from '../utils/legalWords';
 
 const prisma = new PrismaClient();
 
@@ -23,11 +24,31 @@ export async function findScoreByUserAndPuzzle(
 
 export async function updateScore(
   id: string,
-  payload: Partial<Score>
-): Promise<Score> {
-  const score = await prisma.score.update({ where: { id }, data: payload });
+  payload: { word: string }
+): Promise<Score | null> {
+  const { word } = payload;
 
-  return score;
+  const existingScore = await prisma.score.findFirst({
+    where: { id },
+  });
+
+  if (
+    existingScore &&
+    legalWords.includes(word) &&
+    !existingScore.words.includes(word)
+  ) {
+    const newValue = existingScore.value + word.length;
+    const newWords = JSON.stringify([...JSON.parse(existingScore.words), word]);
+
+    const updatedScore = await prisma.score.update({
+      where: { id },
+      data: { value: newValue, words: newWords },
+    });
+
+    return updatedScore;
+  }
+
+  return existingScore;
 }
 
 export async function submitScore(id: string): Promise<Score> {

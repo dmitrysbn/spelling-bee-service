@@ -19,7 +19,7 @@ model Puzzle {
 
 model Score {
   id        String   @id @default(uuid())
-  score     Int
+  value     Int      @default(0)
   words     String
   complete  Boolean  @default(false)
   userId    String
