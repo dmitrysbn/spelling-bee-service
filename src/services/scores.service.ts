@@ -1,5 +1,4 @@
 import { PrismaClient, Score } from '@prisma/client';
-import { legalWords } from '../utils/legalWords';
 
 const prisma = new PrismaClient();
 
@@ -31,6 +30,16 @@ export async function updateScore(
   const existingScore = await prisma.score.findFirst({
     where: { id },
   });
+
+  const puzzle = await prisma.puzzle.findFirst({
+    where: { id: existingScore?.puzzleId },
+  });
+
+  if (!puzzle) {
+    return existingScore;
+  }
+
+  const legalWords = JSON.parse(puzzle.words);
 
   if (
     existingScore &&

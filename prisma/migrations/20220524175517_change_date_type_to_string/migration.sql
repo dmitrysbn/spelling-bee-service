@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Puzzle" ALTER COLUMN "date" SET DATA TYPE TEXT;

@@ -5,8 +5,9 @@ import { getCurrentPuzzleId, createPuzzle } from '../services/puzzles.service';
 
 const puzzleRouter = new Router({ prefix: '/puzzles' });
 
-puzzleRouter.get('/current_puzzle', (ctx: Context) => {
-  const puzzleId: string = getCurrentPuzzleId();
+puzzleRouter.get('/current_puzzle', async (ctx: Context) => {
+  const puzzleId: string = await getCurrentPuzzleId();
+
   ctx.body = { puzzleId };
 });
 

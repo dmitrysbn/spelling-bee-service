@@ -13,6 +13,7 @@ datasource db {
 model Puzzle {
   id        String   @id @default(uuid())
   words     String
+  date      String
   createdAt DateTime @default(now())
   scores    Score[]
 }
