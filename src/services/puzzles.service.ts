@@ -15,6 +15,8 @@ export async function getCurrentPuzzleId(): Promise<string> {
 }
 
 export async function createPuzzle(payload: Puzzle) {
+  console.log(payload);
+
   const game = await prisma.puzzle.create({
     data: payload,
   });

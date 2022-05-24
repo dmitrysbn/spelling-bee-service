@@ -43,7 +43,7 @@ export async function updateScore(
 
   if (
     existingScore &&
-    legalWords.includes(word.toLowerCase()) &&
+    legalWords.includes(word.toUpperCase()) &&
     !existingScore.words.includes(word)
   ) {
     const newValue = existingScore.points + word.length;
