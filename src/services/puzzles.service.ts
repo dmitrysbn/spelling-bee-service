@@ -5,16 +5,14 @@ const prisma = new PrismaClient();
 
 export async function getCurrentPuzzle(): Promise<Partial<Puzzle>> {
   const today = format(new Date(), 'dd-MM-yyyy');
-  console.log('today:', today);
-
-  const puzzle = await prisma.puzzle.findFirst({ where: { date: today } });
-
-  console.log(puzzle);
+  const puzzle: Puzzle = await prisma.puzzle.findFirst({
+    where: { date: today },
+  });
 
   return {
-    id: (puzzle as Puzzle).id,
-    letters: (puzzle as Puzzle).letters,
-    mainLetter: (puzzle as Puzzle).mainLetter,
+    id: puzzle.id,
+    letters: puzzle.letters,
+    mainLetter: puzzle.mainLetter,
   };
 }
 
