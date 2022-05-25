@@ -12,7 +12,6 @@ COPY . .
 RUN apt-get update
 RUN apt-get install -y openssl
 
-
 RUN npm install\
   && npm install -g typescript\
   && npm install -g nodemon
@@ -20,6 +19,6 @@ RUN npx prisma generate
 
 RUN tsc
 
-EXPOSE 1337
+# EXPOSE 1337
 
 CMD ["npm", "start"]
