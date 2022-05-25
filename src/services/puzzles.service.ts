@@ -3,19 +3,23 @@ import format from 'date-fns/format';
 
 const prisma = new PrismaClient();
 
-export async function getCurrentPuzzleId(): Promise<string> {
+export async function getCurrentPuzzle(): Promise<Partial<Puzzle>> {
   const today = format(new Date(), 'dd-MM-yyyy');
+  console.log('today:', today);
+
   const puzzle = await prisma.puzzle.findFirst({ where: { date: today } });
 
-  if (!puzzle) {
-    return '';
-  }
+  console.log(puzzle);
 
-  return puzzle.id;
+  return {
+    id: (puzzle as Puzzle).id,
+    letters: (puzzle as Puzzle).letters,
+    mainLetter: (puzzle as Puzzle).mainLetter,
+  };
 }
 
 export async function createPuzzle(payload: Puzzle) {
-  console.log(payload);
+  console.log('payload:', payload);
 
   const game = await prisma.puzzle.create({
     data: payload,

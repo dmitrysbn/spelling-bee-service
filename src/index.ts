@@ -20,7 +20,7 @@ app.use(bodyParser());
 
 // Routes
 app.use(async (ctx, next) => await error(ctx, next));
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors());
 app.use(router());
 
 app.listen(PORT, () => {
