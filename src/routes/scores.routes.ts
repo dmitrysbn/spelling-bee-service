@@ -4,6 +4,7 @@ import Router from 'koa-router';
 import {
   createScore,
   findScoreByUserAndPuzzle,
+  findScoreByUserLatestPuzzle,
   submitScore,
   updateScore,
 } from '../services/scores.service';
@@ -14,10 +15,16 @@ scoreRouter.get('/', async (ctx: Context) => {
   const { query } = ctx.request;
   const { userId, puzzleId } = query;
 
-  const score = await findScoreByUserAndPuzzle(
-    userId as string,
-    puzzleId as string
-  );
+  let score;
+
+  if (puzzleId) {
+    score = await findScoreByUserAndPuzzle(
+      userId as string,
+      puzzleId as string
+    );
+  } else {
+    score = await findScoreByUserLatestPuzzle(userId as string);
+  }
 
   ctx.body = score;
 });

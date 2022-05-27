@@ -1,4 +1,5 @@
 import { PrismaClient, Score } from '@prisma/client';
+import { getCurrentPuzzle } from './puzzles.service';
 
 const prisma = new PrismaClient();
 
@@ -16,6 +17,18 @@ export async function findScoreByUserAndPuzzle(
 ): Promise<Score | null> {
   const score = await prisma.score.findUnique({
     where: { userId_puzzleId: { userId, puzzleId } },
+  });
+
+  return score;
+}
+
+export async function findScoreByUserLatestPuzzle(
+  userId: string
+): Promise<Score | null> {
+  const { id } = await getCurrentPuzzle();
+
+  const score = await prisma.score.findUnique({
+    where: { userId_puzzleId: { userId, puzzleId: id } },
   });
 
   return score;
